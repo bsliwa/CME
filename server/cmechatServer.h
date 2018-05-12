@@ -1,6 +1,10 @@
-// Here are #defines used in the CMEChat Server application
-//
-//
+#include "cmechatLogger.h"
 
-// Maximum # of incoming client connections to the server
-#define MAX_CONNECTIONS 10000
+class cmechatServer 
+{
+public:
+	cmechatServer();
+
+private:
+	cmechatLogger logger;	
+};
