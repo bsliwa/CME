@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 #include <netdb.h>
 #include <cstring>
 #include <cstdlib>
@@ -8,6 +9,16 @@
 #include "../common/cmechatCommandLineParser.h"
 
 #include "cmechatServer.h"
+
+// get_in_addr is from Beej's Guide to Network Programming
+void *get_in_addr(struct sockaddr *sa)
+{
+    if (sa->sa_family == AF_INET) {
+        return &(((struct sockaddr_in*)sa)->sin_addr);
+    }
+
+    return &(((struct sockaddr_in6*)sa)->sin6_addr);
+}
 
 cmechatServer::cmechatServer(const char* logFileName,
 			int argc,
@@ -48,7 +59,7 @@ cmechatServer::cmechatServer(const char* logFileName,
 	}
 }
 
-int cmechatServer::openServer()
+void cmechatServer::openServer()
 {
 	int status;
 	struct addrinfo hints;
@@ -101,4 +112,40 @@ int cmechatServer::openServer()
 		exit(1);
 	}
 
+	_listenFd = sockfd;
+}
+
+void cmechatServer::listen()
+{
+	int ret;
+	struct sockaddr_storage clientAddr;
+	char s[INET_ADDRSTRLEN];
+
+	ret = ::listen(_listenFd, 10);  // allow backlog of 10
+
+	while(1)
+	{
+		int sinSize = sizeof(clientAddr);
+		int clientFd = accept(_listenFd,
+						(struct sockaddr*)&clientAddr,
+						&sinSize);
+		if (clientFd < 0)
+		{
+			perror("Error with accept.  Continuing...");
+			continue;
+		}
+
+		inet_ntop(clientAddr.ss_family,
+				get_in_addr((struct sockaddr *)&clientAddr),
+				s,
+				sizeof(s));
+
+		{
+			std::string logme;
+			logme = "Accepted connection from ";
+			logme += s;
+			_logger.log(logme.c_str());
+		}
+
+	}
 }

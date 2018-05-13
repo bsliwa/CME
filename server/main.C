@@ -8,5 +8,7 @@ int main(int argc, char *argv[])
 
 	server.openServer();
 
+	server.listen();
+
 }
 
