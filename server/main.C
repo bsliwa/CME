@@ -2,10 +2,9 @@
 
 #include "cmechatServer.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-	cmechatServer server("./server.log");
+	cmechatServer server("./server.log", argc, argv);
 
-        std::cout << "hello" << std::endl;
 }
 

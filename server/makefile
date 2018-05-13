@@ -5,6 +5,6 @@ DEPS = cmechatServer.h ../common/cmechatLogger.h
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-cmechatServer: main.o cmechatServer.o ../common/cmechatLogger.o
-	$(CC) -o cmechatServer main.o cmechatServer.o ../common/cmechatLogger.o -I. -I../common
+cmechatServer: main.o cmechatServer.o ../common/cmechatLogger.o ../common/cmechatCommandLineParser.C
+	$(CC) -o cmechatServer main.o cmechatServer.o ../common/cmechatLogger.o ../common/cmechatCommandLineParser.C -I. -I../common
 
