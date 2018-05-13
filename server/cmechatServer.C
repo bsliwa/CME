@@ -6,9 +6,9 @@
 #include <cstring>
 #include <cstdlib>
 
+#include "cmechatServer.h"
 #include "../common/cmechatCommandLineParser.h"
 
-#include "cmechatServer.h"
 
 // get_in_addr is from Beej's Guide to Network Programming
 void *get_in_addr(struct sockaddr *sa)
