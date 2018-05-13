@@ -6,5 +6,7 @@ int main(int argc, char *argv[])
 {
 	cmechatServer server("./server.log", argc, argv);
 
+	server.openServer();
+
 }
 

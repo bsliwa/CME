@@ -6,7 +6,8 @@
 
 cmechatLogger::cmechatLogger(const char *destFileName) :
 	_myfile(0),
-	_isGood(false)
+	_isGood(false),
+	_debugMode(false)
 {
 	if (destFileName == 0)
 	{
@@ -32,13 +33,17 @@ cmechatLogger::~cmechatLogger()
 		_myfile.close();
 }
 
-void cmechatLogger::log(const char *logme) 
+void cmechatLogger::log(const char *logme, bool isDebug) 
 {
+	// if debug mode is off and this is a debug log, return now
+	if (isDebug && _debugMode == false) 
+		return;
+
 	// get the time and print it to the log file
 	std::time_t t = std::time(0);
 	char mbstr[100];
 	if (std::strftime(mbstr, sizeof(mbstr), "%c", std::localtime(&t))) 
-		_myfile << mbstr << " - ";
+		_myfile << mbstr << " --> ";
 
 	// now send the user's text to the log file
 	_myfile << logme

@@ -12,4 +12,5 @@ private:
 	cmechatLogger _logger;	//file logger object
 	char *_port;		//tcp port server will open
 	char *_node; 		//ip socket will use
+	
 };

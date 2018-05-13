@@ -9,11 +9,15 @@ public:
 	cmechatLogger(const char *destFile);
 	~cmechatLogger();
 
-	void log(const char*) ;
+	void log(const char*, bool isDebug=false) ;
+
+	void setDebugMode(bool b) { _debugMode = b; }
+
 
 private:
 	std::ofstream _myfile;
 	bool _isGood;
+	bool _debugMode;
 
 	cmechatLogger();
 	void setIsGood(bool b) { _isGood = b; }

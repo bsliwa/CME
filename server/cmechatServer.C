@@ -14,6 +14,8 @@ cmechatServer::cmechatServer(const char* logFileName,
 			char **argv) :
 	_logger(logFileName)
 {
+	bool debug = cmdOptionExists(argv, argv+argc, "-d");
+	_logger.setDebugMode(debug);
 
 	// read the port from command line
 	_port = getCmdOption(argv, argv+argc, "-p");
@@ -66,7 +68,37 @@ int cmechatServer::openServer()
 		sockfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
 		if (sockfd < 0)
 		{
-			_logger.log("socket fail...");
+			_logger.log("socket fail...", true);
 		}
+		else
+		{
+			_logger.log("socket success", true);
+		}
+
+		int yes = 1;
+		int ret = setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
+		if (ret < 0)
+		{
+			perror("Unable to set SO_REUSEADDR.  Exiting...");
+			exit(1);
+		}
+
+		ret = bind(sockfd, p->ai_addr, p->ai_addrlen);
+		if (ret < 0)
+		{
+			perror("Unable to bind.  Exiting...");
+			exit(1);
+		}
+
+		break;
 	}
+
+	freeaddrinfo(serverinfo);
+
+	if (p == 0)
+	{
+		_logger.log("Unable to bind.  Exiting...");
+		exit(1);
+	}
+
 }
