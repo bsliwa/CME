@@ -1,17 +1,18 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include <fstream>
+#include <iostream>
 
 class cmechatLogger
 {
 public:
 	bool isGood() const { return _isGood; }
 
-	cmechatLogger(char *destFile);
+	cmechatLogger(const char *destFile);
 	~cmechatLogger();
 
+	void log(const char*) ;
+
 private:
-	int _fd;
+	std::ofstream _myfile;
 	bool _isGood;
 
 	cmechatLogger();

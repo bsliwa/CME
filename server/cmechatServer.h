@@ -1,10 +1,12 @@
-#include "cmechatLogger.h"
+#include "../common/cmechatLogger.h"
 
 class cmechatServer 
 {
 public:
-	cmechatServer();
+	cmechatServer(const char* logFileName);
+	int openServer();
 
 private:
-	cmechatLogger logger;	
+	cmechatLogger _logger;	
+
 };

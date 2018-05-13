@@ -1,9 +1,11 @@
 #include <iostream>
+#include <ios>
+#include <ctime>
 
 #include "cmechatLogger.h"
 
-cmechatLogger::cmechatLogger(char *destFileName) :
-	_fd(0),
+cmechatLogger::cmechatLogger(const char *destFileName) :
+	_myfile(0),
 	_isGood(false)
 {
 	if (destFileName == 0)
@@ -12,20 +14,33 @@ cmechatLogger::cmechatLogger(char *destFileName) :
 		return;
 	}
 
-	_fd = open(destFileName, O_APPEND | O_CREAT | O_WRONLY);
-	if (_fd <= 0)
+	_myfile.open (destFileName, std::fstream::out | std::fstream::app );  //output and append mode
+	if (!_myfile.is_open())
 	{
-		std::cout << "ERROR: Name is NULL. Could not init the file logger." << std::endl;
+		std::cout << "ERROR: Could not start the file logger." << std::endl;
 		return;
 	}
 
 	_isGood = true;
 
-	
+	log("Opened log file");
 }
-
 
 cmechatLogger::~cmechatLogger()
 {
-//	if (
+	if (_myfile.is_open()) 
+		_myfile.close();
+}
+
+void cmechatLogger::log(const char *logme) 
+{
+	// get the time and print it to the log file
+	std::time_t t = std::time(0);
+	char mbstr[100];
+	if (std::strftime(mbstr, sizeof(mbstr), "%c", std::localtime(&t))) 
+		_myfile << mbstr << " - ";
+
+	// now send the user's text to the log file
+	_myfile << logme
+		<< std::endl;
 }
