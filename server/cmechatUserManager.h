@@ -14,6 +14,7 @@ class cmechatUserManager
     public:
         cmechatUserManager(cmechatServer &myserver);
         cmechatUser* getNewUser();
+        cmechatServer& myServer(return _myServer);
 
     private:
         std::vector<cmechatUser *> _userVector;

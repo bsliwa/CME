@@ -65,6 +65,6 @@ void cmechatUser::decodeMsg(char *msg, int msgLen)
 	{
 		struct cmechatMessageBroadcastMessage *broadcastMsg;
 		broadcastMsg = (struct cmechatMessageBroadcastMessage *) msg;
-
+		this->_myUserManager.myServer();
 	}
 }
