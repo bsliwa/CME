@@ -12,9 +12,11 @@
 #include <stdio.h>*/
 
 #include "cmechatServer.h"
+#include "cmechatUserManager.h"
 #include "../common/cmechatInterface.h"
 #include "../common/cmechatCommandLineParser.h"
 
+cmechatUserManager cmechatServer::_userManager;
 
 // get_in_addr is from Beej's Guide to Network Programming
 void *get_in_addr(struct sockaddr *sa)
@@ -128,7 +130,7 @@ int runUserThread(int myFd)
 	int numSent = send(myFd, "Accepted connection\0", strlen("Accepted connection")+1, 0);
 	std::cout << "sent " << numSent << " bytes" << std::endl;
 
-	cmechatUser *me = cmechatServer.userManager.getNewUser();
+	cmechatUser *me = cmechatServer::_userManager.getNewUser();
 	if (me == 0)
 	{
 		std::cout << "Maximum number of connections met.  Exiting..." << std::endl;

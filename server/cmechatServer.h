@@ -10,7 +10,7 @@ public:
 	void openServer();
 	void listen();
 
-	cmechatUserManager& userManager() { return _userManager; };
+	static cmechatUserManager _userManager;
 
 
 private:
@@ -18,6 +18,4 @@ private:
 	char *_port;		//tcp port server will open
 	char *_node; 		//ip socket will use
 	int _listenFd;
-	cmechatUserManager _userManager;
-	
 };
