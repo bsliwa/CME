@@ -1,3 +1,6 @@
+#ifndef _CMECHAT_INTERFACE_
+#define _CMECHAT_INTERFACE_
+
 #define MAX_MSG_LEN 280
 #define MAX_USERNAME_LEN 28
 
@@ -27,3 +30,5 @@ struct cmechatMessageUnicastMessage
     char targetUser[MAX_USERNAME_LEN];
     char body[MAX_MSG_LEN];
 };
+
+#endif
