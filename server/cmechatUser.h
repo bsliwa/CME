@@ -7,6 +7,7 @@ class cmechatUser
 {
 public:
     cmechatUser();
+    runUser();
 
 private:
     std::string _username;

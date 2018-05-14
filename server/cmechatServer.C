@@ -123,6 +123,7 @@ void cmechatServer::openServer()
 	_listenFd = sockfd;
 }
 
+
 int runUserThread(int myFd)
 {
 	char readArr[MAX_MSG_LEN];
@@ -136,16 +137,8 @@ int runUserThread(int myFd)
 		std::cout << "Maximum number of connections met.  Exiting..." << std::endl;
 	}
 
-	while(true)
-	{
-		int numRx = recv(myFd, readArr, sizeof(readArr), 0);
-		if (numRx == 0)
-		{
-			std::cout << "User disconnected " << std::endl;
-			break;
-		}
-		std::cout << "Message received on server (" << numRx << ") " << readArr << std::endl;
-	}
+	me->runUser();
+
 }
 
 void cmechatServer::listen()
