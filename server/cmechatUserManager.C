@@ -16,7 +16,7 @@ cmechatUser* cmechatUserManager::getNewUser()
     cmechatUser *user = _freeUserVector.back();
     _freeUserVector.pop_back();
 
-    _inUserVector.push_back(user);
+    _inUseVector.push_back(user);
 
     return user;
 }
