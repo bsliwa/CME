@@ -124,17 +124,17 @@ void cmechatServer::openServer()
 }
 
 
-int runUserThread(int myFd)
+int runUserThread(int myFd, cmechatUser *me)
 {
 	char readArr[MAX_MSG_LEN];
 	std::cout << "in thread" << std::endl;
 	int numSent = send(myFd, "Accepted connection\0", strlen("Accepted connection")+1, 0);
 	std::cout << "sent " << numSent << " bytes" << std::endl;
 
-	cmechatUser *me = cmechatServer::_userManager.getNewUser();
 	if (me == 0)
 	{
 		std::cout << "Maximum number of connections met.  Exiting..." << std::endl;
+		exit(1);
 	}
 	me->setup(myFd, "username");  //bsliwa need to get hte real username here
 
@@ -173,8 +173,9 @@ void cmechatServer::listen()
 		_logger.log(logme.c_str());
 
 std::cout << "creatign thread" << std::endl;
+		cmechatUser *me = cmechatServer::_userManager.getNewUser();
 		std::thread newThread;
-		newThread = std::thread(runUserThread, clientFd);
+		newThread = std::thread(runUserThread, clientFd, me);
 		newThread.join();
 std::cout << "after thread" << std::endl;
 		
