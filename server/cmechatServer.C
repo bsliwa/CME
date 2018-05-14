@@ -7,6 +7,10 @@
 #include <cstdlib>
 #include <thread>
 
+/*#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <stdio.h>*/
+
 #include "cmechatServer.h"
 #include "../common/cmechatCommandLineParser.h"
 
@@ -149,12 +153,10 @@ void cmechatServer::listen()
 				s,
 				sizeof(s));
 
-		{
-			std::string logme;
-			logme = "Accepted connection from ";
-			logme += s;
-			_logger.log(logme.c_str());
-		}
+		std::string logme;
+		logme = "Accepted connection from ";
+		logme += s;
+		_logger.log(logme.c_str());
 
 std::cout << "creatign thread" << std::endl;
 		std::thread newThread;
