@@ -211,12 +211,14 @@ void cmechatClient::runChat()
 
         if (FD_ISSET(0, &readSet))
         {
+            int msglen=0;
             getline(std::cin, usermsg);
             std::cout << "you entered " << usermsg << std::endl;
             struct cmechatMessageBroadcastMessage msg;
-            msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE;
-            strcpy(msg.body, usermsg.c_str());
-            int sentBytes = send(_myFd, (char*)&msg, usermsg.length()+1, 0);
+            msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
+            strcpy(msg.body, usermsg.c_str()); 	           msglen += usermsg.length()+1;
+            msg.body[usermsg.length()] = '\0';
+            int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
             std::cout << "sent " << sentBytes << " bytes" << std::endl;
         }
 

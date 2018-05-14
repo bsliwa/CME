@@ -16,7 +16,6 @@
 #include "../common/cmechatInterface.h"
 #include "../common/cmechatCommandLineParser.h"
 
-cmechatUserManager cmechatServer::_userManager;
 
 // get_in_addr is from Beej's Guide to Network Programming
 void *get_in_addr(struct sockaddr *sa)
@@ -173,7 +172,7 @@ void cmechatServer::listen()
 		_logger.log(logme.c_str());
 
 std::cout << "creatign thread" << std::endl;
-		cmechatUser *me = cmechatServer::_userManager.getNewUser();
+		cmechatUser *me = _userManager.getNewUser();
 		std::thread newThread;
 		newThread = std::thread(runUserThread, clientFd, me);
 		newThread.join();

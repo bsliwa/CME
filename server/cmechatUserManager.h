@@ -1,5 +1,5 @@
-#ifndef _CHECHAT_USER_MANAGER_
-#define _CHECHAT_USER_MANAGER_
+#ifndef _CMECHAT_USER_MANAGER_
+#define _CMECHAT_USER_MANAGER_
 
 #include <vector>
 
