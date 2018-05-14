@@ -41,6 +41,7 @@ void cmechatUser::decodeMsg(char *msg, int msgLen)
 {
 	int opcode;
 
+	//get the opcode by mapping the first 8 bytes into opcode
 	if (msgLen > sizeof(int))
 	{
 		opcode = ((int)*msg);
@@ -49,7 +50,8 @@ void cmechatUser::decodeMsg(char *msg, int msgLen)
 
 	if (opcode == CMECHAT_OPCODE_NEWUSER)
 	{
-		struct cmechatMessageNewUser *newUserMsg = (struct cmechatMessageNewUser *)msg;
+		struct cmechatMessageNewUser *newUserMsg;
+		newUserMsg = (struct cmechatMessageNewUser *)msg;
 		this->_username = newUserMsg->username;
 		std::cout << "the username is " << this->_username;
 	}
