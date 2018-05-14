@@ -106,7 +106,7 @@ void cmechatClient::connectToServer()
 
     if (p == 0)
     {
-        fprintf(stdout, "Could not connect to server at %s port %s", _host, _port);
+        fprintf(stdout, "Could not connect to server at %s port %s\n", _host, _port);
         exit(1);
     }
 

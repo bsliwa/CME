@@ -122,10 +122,17 @@ void cmechatServer::openServer()
 
 int runUserThread(int myFd)
 {
+	char readArr[MAX_MSG_LEN];
 	std::cout << "in thread" << std::endl;
 	int numSent = send(myFd, "Accepted connection\0", strlen("Accepted connection")+1, 0);
 	std::cout << "sent " << numSent << " bytes" << std::endl;
 
+	while(true)
+	{
+		int numRx = recv(myFd, readArr, sizeof(readArr), 0);
+		std::cout << "Message received on server (" << numRx << ") " << readArr << std::endl;
+
+	}
 }
 
 void cmechatServer::listen()
