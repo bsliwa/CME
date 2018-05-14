@@ -131,6 +131,11 @@ int runUserThread(int myFd)
 	while(true)
 	{
 		int numRx = recv(myFd, readArr, sizeof(readArr), 0);
+		if (numRx == 0)
+		{
+			std::cout << "User disconnected " << std::endl;
+			break;
+		}
 		std::cout << "Message received on server (" << numRx << ") " << readArr << std::endl;
 	}
 }
