@@ -13,6 +13,7 @@ class cmechatClient
         void runChat();
         void getUsername();
         void registerUsername();
+        void sendUserName();
 
     private:
         cmechatLogger _logger;  //file logger object

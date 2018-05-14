@@ -165,6 +165,22 @@ void cmechatClient::getUsername()
     }
 }
 
+void cmechatClient::sendUserName()
+{
+    struct cmechatMessageNewuser newUserMsg;
+    unsigned int msgLen=0;
+
+    newUserMsg.opcode = CMECHAT_OPCODE_NEWUSER; msgLen+= sizeof(mewUserMsg.opcode);
+    strcpy(newUserMsg.username, this->_username); msgLen += sizeof(newUserMsg.username)+1;
+
+    int sentBytes = send(_myFd, newUserMsg, msgLen, 0);
+    if (sentBytes < 0)
+    {
+        std::cout << "Could not send username to server.  Exiting..." << std::endl;
+        exit(1);
+    }
+}
+
 void cmechatClient::runChat()
 {
     std::string userMessage;
@@ -176,7 +192,6 @@ void cmechatClient::runChat()
 
     FD_ZERO(&readSet);
     maxFd = std::max(_myFd, 0) + 1;
-
 
     while (true)
     {

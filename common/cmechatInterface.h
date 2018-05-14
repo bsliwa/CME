@@ -12,7 +12,7 @@ enum CMECHAT_INTERFACE_OPCODES
 struct cmechatMessageNewuser
 {
     unsigned char opcode;
-    char body[MAX_USERNAME_LEN];
+    char username[MAX_USERNAME_LEN];
 };
 
 struct cmechatMessageBroadcastMessage
