@@ -17,6 +17,20 @@ cmechatUser* cmechatUserManager::getNewUser()
     _freeUserVector.pop_back();
 
     _inUserVector.push_back(user);
-    
+
     return user;
 }
+/*
+void cmechatUserManager::freeUser(cmechatUser *user)
+{
+    for (std::vector<cmechatUser*>::iterator it = _inUseVector.begin();
+          it != _inUseVector.end();
+          ++it)
+          {
+              if (*it == user)
+              {
+                  _inUseVector.erase()
+              }
+          }
+}
+*/
