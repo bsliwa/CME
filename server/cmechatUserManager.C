@@ -2,7 +2,8 @@
 #include "cmechatUser.h"
 #include "cmechatUserManager.h"
 
-cmechatUserManager::cmechatUserManager()
+cmechatUserManager::cmechatUserManager(cmechatServer &myServer)
+: _myServer(myServer)
 {
     for(int i=0;  i<MAX_CONNECTIONS;  i++)
     {

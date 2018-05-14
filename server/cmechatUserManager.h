@@ -3,9 +3,11 @@
 
 #include <vector>
 
+#include "cmechatServer.h"
 #include "cmechatUser.h"
 
 class cmechatUser;
+class cmechatServer;
 
 class cmechatUserManager
 {
@@ -15,7 +17,7 @@ class cmechatUserManager
 
     private:
         std::vector<cmechatUser *> _userVector;
-        cmechatServer _myServer;
+        cmechatServer &_myServer;
 
 };
 

@@ -20,6 +20,6 @@ private:
 	char *_port;		//tcp port server will open
 	char *_node; 		//ip socket will use
 	int _listenFd;
-	cmechatUserManager _userManager;
+	cmechatUserManager _myUserManager;
 };
 #endif
