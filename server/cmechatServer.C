@@ -12,8 +12,8 @@
 #include <stdio.h>*/
 
 #include "cmechatServer.h"
-#include "../common/cmechatCommandLineParser.h"
 #include "../common/cmechatInterface.h"
+#include "../common/cmechatCommandLineParser.h"
 
 
 // get_in_addr is from Beej's Guide to Network Programming
@@ -132,7 +132,6 @@ int runUserThread(int myFd)
 	{
 		int numRx = recv(myFd, readArr, sizeof(readArr), 0);
 		std::cout << "Message received on server (" << numRx << ") " << readArr << std::endl;
-	        std::flush(std::cout);
 	}
 }
 
