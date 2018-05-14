@@ -43,7 +43,7 @@ void cmechatUser::decodeMsg(char *msg, int msgLen)
 
 	if (msgLen > sizeof(int))
 	{
-		opcode = ((int)*msg));
+		opcode = ((int)*msg);
 		std::cout << "opcode is: " << opcode << std::endl;
 	}
 
