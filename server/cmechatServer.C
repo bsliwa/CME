@@ -116,9 +116,8 @@ void cmechatServer::openServer()
 	_listenFd = sockfd;
 }
 
-int runUserThread()
+int runUserThread(int myFd)
 {
-	int myFd=0;
 	std::cout << "in thread" << std::endl;
 	int numSent = send(myFd, "Accepted connection\0", strlen("Accepted connection")+1, 0);
 	std::cout << "sent " << numSent << " bytes" << std::endl;
@@ -159,7 +158,7 @@ void cmechatServer::listen()
 
 std::cout << "creatign thread" << std::endl;
 		std::thread newThread;
-		newThread = std::thread(runUserThread);
+		newThread = std::thread(runUserThread, clientFd);
 		newThread.join();
 std::cout << "after thread" << std::endl;
 		
