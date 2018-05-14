@@ -7,6 +7,8 @@ int main(int argc, char *argv[])
     client.getUsername();
 
     client.connectToServer();
+    
+    client.registerUsername();
 
     client.runChat();
 }

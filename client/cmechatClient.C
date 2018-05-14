@@ -127,6 +127,16 @@ void cmechatClient::connectToServer()
     _myFd = mysock;
 }
 
+void cmechatClient::registerUsername()
+{
+    struct cmechatMessageNewuser msg;
+    
+    memset(&msg, 0, sizeof(msg));
+    msg.opcode = CMECHAT_OPCODE_NEWUSER;
+    strcpy(&msg.body[0], _username.c_str());
+    send(_myFd, &msg, sizeof(msg), 0); 
+}
+
 void cmechatClient::getUsername()
 {
     std::string username;

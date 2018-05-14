@@ -1,7 +1,6 @@
 #include "../common/cmechatLogger.h"
+#include "../common/cmechatInterface.h"
 
-#define MAX_MSG_LEN 280
-#define MAX_USERNAME_LEN 28
 
 class cmechatClient
 {
@@ -13,6 +12,7 @@ class cmechatClient
         void connectToServer();
         void runChat();
         void getUsername();
+        void registerUsername();
 
     private:
         cmechatLogger _logger;  //file logger object
