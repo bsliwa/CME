@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "cmechatServer.h"
+#include "cmechatUserManager.h"
 
 int main(int argc, char *argv[])
 {

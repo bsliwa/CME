@@ -1,4 +1,7 @@
-#include <stack>
+#ifndef _CHECHAT_USER_MANAGER_
+#define _CHECHAT_USER_MANAGER_
+
+#include <vector>
 
 #include "cmechatUser.h"
 
@@ -6,8 +9,11 @@ class cmechatUserManager
 {
     public:
         cmechatUserManager();
+        cmechatUser* getNewUser();
 
     private:
-        std::stack<cmechatUser *> _userStack;
+        std::vector<cmechatUser *> _userVector;
 
 };
+
+#endif

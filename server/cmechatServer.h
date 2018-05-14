@@ -1,4 +1,5 @@
 #include "../common/cmechatLogger.h"
+#include "cmechatUserManager.h"
 
 class cmechatServer 
 {
@@ -8,6 +9,8 @@ public:
 			char** argv);
 	void openServer();
 	void listen();
+
+	static cmechatUserManager userManager;
 
 
 private:
