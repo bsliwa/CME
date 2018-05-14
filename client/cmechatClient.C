@@ -213,7 +213,10 @@ void cmechatClient::runChat()
         {
             getline(std::cin, usermsg);
             std::cout << "you entered " << usermsg << std::endl;
-            int sentBytes = send(_myFd, usermsg.c_str(), usermsg.length()+1, 0);
+            struct cmechatMessageBroadcastMessage msg;
+            msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE;
+            strcpy(msg.body, usermsg.c_str());
+            int sentBytes = send(_myFd, (char*)&msg, usermsg.length()+1, 0);
             std::cout << "sent " << sentBytes << " bytes" << std::endl;
         }
 
