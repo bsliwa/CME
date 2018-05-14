@@ -16,6 +16,7 @@ public:
     void runUser();
     void setup(int fd, std::string username);
     void decodeMsg(char *msg, int msglen);
+    std::string username() { return _username; }
 
 private:
     std::string _username;

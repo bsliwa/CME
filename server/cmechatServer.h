@@ -14,13 +14,13 @@ public:
 			char** argv);
 	void openServer();
 	void listen();
+	void fanOutBroadcast(char *msg);
 
 private:
 	cmechatLogger _logger;	//file logger object
 	char *_port;		//tcp port server will open
 	char *_node; 		//ip socket will use
 	int _listenFd;
-	void fanOutBroadcast(char *msg);
 	cmechatUserManager _myUserManager;
 };
 #endif
