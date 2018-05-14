@@ -6,9 +6,10 @@
 #include "cmechatUser.h"
 #include "cmechatInterface.h"
 
-cmechatUser::cmechatUser() :
+cmechatUser::cmechatUser(cmechatServer &myserver) :
     _fd(0),
-    _username("")
+    _username(""),
+	_myServer(myserver)
 {
 }
 
@@ -54,5 +55,12 @@ void cmechatUser::decodeMsg(char *msg, int msgLen)
 		newUserMsg = (struct cmechatMessageNewuser *)msg;
 		this->_username = newUserMsg->username;
 		std::cout << "the username is " << this->_username << ".." << newUserMsg->username <<std::endl;
+	}
+
+	if (opcode == CMECHAT_OPCODE_BROADCAST_MESSAGE)
+	{
+		struct cmechatMessageBroadcastMessage *broadcastMsg;
+		broadcastMsg = (struct cmechatMessageBroadcastMessage *) msg;
+
 	}
 }
