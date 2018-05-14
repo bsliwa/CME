@@ -171,10 +171,11 @@ void cmechatClient::sendUserName()
     struct cmechatMessageNewuser newUserMsg;
     unsigned int msgLen=0;
 
-    newUserMsg.opcode = CMECHAT_OPCODE_NEWUSER; msgLen+= sizeof(newUserMsg.opcode);
+    newUserMsg.opcode = CMECHAT_OPCODE_NEWUSER;           msgLen+= sizeof(newUserMsg.opcode);
     strcpy(newUserMsg.username, this->_username.c_str()); msgLen += sizeof(newUserMsg.username)+1;
 
     int sentBytes = send(_myFd, (void *)&newUserMsg, msgLen, 0);
+    std::cout << "sending " << sentBytes " bytes " << " out of " << msgLen << std::endl;
     if (sentBytes < 0)
     {
         std::cout << "Could not send username to server.  Exiting..." << std::endl;
