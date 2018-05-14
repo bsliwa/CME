@@ -39,13 +39,13 @@ void cmechatUser::runUser()
 
 void cmechatUser::decodeMsg(char *msg, int msgLen)
 {
-	int opcode;
+	char opcode;
 
 	//get the opcode by mapping the first 8 bytes into opcode
 	if (msgLen > sizeof(int))
 	{
-		opcode = ((int)*msg);
-		std::cout << "opcode is: " << opcode << std::endl;
+		opcode = ((char)*msg);
+		std::cout << "opcode is: " << (int)opcode << std::endl;
 	}
 
 	if (opcode == CMECHAT_OPCODE_NEWUSER)
