@@ -12,6 +12,7 @@
 
 #include "cmechatClient.h"
 #include "../common/cmechatCommandLineParser.h"
+#include "../common/cmechatInterface.h"
 
 // get_in_addr is from Beej's Guide to Network Programming
 void *get_in_addr(struct sockaddr *sa)
@@ -133,7 +134,7 @@ void cmechatClient::registerUsername()
     
     memset(&msg, 0, sizeof(msg));
     msg.opcode = CMECHAT_OPCODE_NEWUSER;
-    strcpy(&msg.body[0], _username.c_str());
+    strcpy(&msg.username[0], _username.c_str());
     send(_myFd, &msg, sizeof(msg), 0); 
 }
 
@@ -170,10 +171,10 @@ void cmechatClient::sendUserName()
     struct cmechatMessageNewuser newUserMsg;
     unsigned int msgLen=0;
 
-    newUserMsg.opcode = CMECHAT_OPCODE_NEWUSER; msgLen+= sizeof(mewUserMsg.opcode);
-    strcpy(newUserMsg.username, this->_username); msgLen += sizeof(newUserMsg.username)+1;
+    newUserMsg.opcode = CMECHAT_OPCODE_NEWUSER; msgLen+= sizeof(newUserMsg.opcode);
+    strcpy(newUserMsg.username, this->_username.c_str()); msgLen += sizeof(newUserMsg.username)+1;
 
-    int sentBytes = send(_myFd, newUserMsg, msgLen, 0);
+    int sentBytes = send(_myFd, (void *)&newUserMsg, msgLen, 0);
     if (sentBytes < 0)
     {
         std::cout << "Could not send username to server.  Exiting..." << std::endl;
