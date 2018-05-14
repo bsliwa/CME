@@ -191,6 +191,8 @@ void cmechatClient::runChat()
     int maxFd;
     std::string usermsg;
 
+    sendUserName();
+
     FD_ZERO(&readSet);
     maxFd = std::max(_myFd, 0) + 1;
 

@@ -50,9 +50,9 @@ void cmechatUser::decodeMsg(char *msg, int msgLen)
 
 	if (opcode == CMECHAT_OPCODE_NEWUSER)
 	{
-		struct cmechatMessageNewUser *newUserMsg;
-		newUserMsg = (struct cmechatMessageNewUser *)msg;
+		struct cmechatMessageNewuser *newUserMsg;
+		newUserMsg = (struct cmechatMessageNewuser *)msg;
 		this->_username = newUserMsg->username;
-		std::cout << "the username is " << this->_username;
+		std::cout << "the username is " << this->_username << ".." << newUserMsg->username <<std::endl;
 	}
 }
