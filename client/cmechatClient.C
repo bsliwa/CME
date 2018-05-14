@@ -211,7 +211,7 @@ void cmechatClient::runChat()
 
         if (FD_ISSET(0, &readSet))
         {
-            std::cin >> usermsg;
+            getline(std::cin, usermsg);
             std::cout << "you entered " << usermsg << std::endl;
             int sentBytes = send(_myFd, usermsg.c_str(), usermsg.length()+1, 0);
             std::cout << "sent " << sentBytes << " bytes" << std::endl;
