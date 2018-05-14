@@ -32,6 +32,18 @@ void cmechatUser::runUser()
 			break;
 		}
 		std::cout << "Message received on server (" << numRx << ") " << readArr << std::endl;
+		decodeMsg(readArr, numRx);
 	}
 
+}
+
+void cmechatUser::decodeMsg(char *msg, int msgLen)
+{
+	int opcode;
+
+	if (msgLen > sizeof(int))
+	{
+		opcode = ((int)*msg));
+		std::cout << "opcode is: " << opcode << std::endl;
+	}
 }

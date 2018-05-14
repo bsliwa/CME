@@ -9,6 +9,7 @@ public:
     cmechatUser();
     void runUser();
     void setup(int fd, std::string username);
+    void decodeMsg(char *msg, int msglen);
 
 private:
     std::string _username;
