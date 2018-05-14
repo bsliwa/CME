@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <algorithm>
 
 #include "cmechatClient.h"
 #include "../common/cmechatCommandLineParser.h"
@@ -124,4 +125,63 @@ void cmechatClient::connectToServer()
     }
 
     _myFd = mysock;
+}
+
+void cmechatClient::getUsername()
+{
+    std::string username;
+    std::cout << "Welcome to CMEChat.  Please enter a username: ";
+    
+    std::cin >> username;
+
+    while (username.length() > MAX_USERNAME_LEN)
+    {
+        std::cout << "Sorry, the maximum length of a username is " 
+            << MAX_USERNAME_LEN 
+            << " characters.  Please enter a shorter name: ";
+        std::cin >> username;
+    }
+
+    std::cout << "Welcome " 
+        << username 
+        << "!"
+        << std::endl;
+
+    {
+        std::string logme;
+        logme = "Username is ";
+        logme += username;
+        _logger.log(logme);
+    }
+}
+
+void cmechatClient::runChat()
+{
+    std::string userMessage;
+    fd_set readSet;
+    ssize_t n;
+    char *readArr = new char[MAX_MSG_LEN];
+    int maxFd;
+    std::string usermsg;
+
+    FD_ZERO(&readSet);
+    maxFd = std::max(_myFd, 0) + 1;
+
+
+    while (true)
+    {
+        std::cout << "Enter a message: ";
+        std::flush(std::cout);
+
+        FD_SET(0, &readSet);
+        FD_SET(_myFd, &readSet);
+        select(maxFd, &readSet, 0, 0, 0);
+
+        if (FD_ISSET(0, &readSet))
+        {
+            std::cin >> usermsg;
+            std::cout << "you entered " << usermsg << std::endl;
+        }
+        
+    }
 }

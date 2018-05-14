@@ -9,7 +9,8 @@ public:
 	cmechatLogger(const char *destFile);
 	~cmechatLogger();
 
-	void log(const char*, bool isDebug=false) ;
+	void log(const char*, bool isDebug=false);
+	void log(std::string &s, bool isDebug=false);
 
 	void setDebugMode(bool b) { _debugMode = b; }
 
