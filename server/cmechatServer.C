@@ -186,4 +186,11 @@ std::cout << "after thread" << std::endl;
 void cmechatServer::fanOutBroadcast(char *msg)
 {
 	std::vector<cmechatUser *> &inuseVector = this->_myUserManager.getInUseVector();
+
+	for (vector<cmechatUser *>::iterator it = inuseVector.begin(); 
+	           it != inuseVector.end(); 
+			   it++)
+	{
+		std::cout << "iterating!" << std::endl;
+	}
 }
