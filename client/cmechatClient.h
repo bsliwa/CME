@@ -1,3 +1,6 @@
+#ifndef _CMECHAT_CLIENT__
+#define _CMECHAT_CLIENT__
+
 #include "../common/cmechatLogger.h"
 #include "../common/cmechatInterface.h"
 
@@ -22,3 +25,5 @@ class cmechatClient
         int _myFd;
         std::string _username;
 };
+
+#endif

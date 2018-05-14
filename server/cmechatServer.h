@@ -1,5 +1,11 @@
+#ifndef _CMECHAT_SERVER_
+#define _CMECHAT_SERVER_
+
 #include "../common/cmechatLogger.h"
 #include "cmechatUserManager.h"
+
+
+class cmechatUserManager;
 
 class cmechatServer 
 {
@@ -19,3 +25,4 @@ private:
 	char *_node; 		//ip socket will use
 	int _listenFd;
 };
+#endif

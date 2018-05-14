@@ -1,3 +1,6 @@
+#ifndef _CMECHAT_LOGGER_
+#define _CMECHAT_LOGGER_
+
 #include <fstream>
 #include <iostream>
 
@@ -23,3 +26,5 @@ private:
 	cmechatLogger();
 	void setIsGood(bool b) { _isGood = b; }
 };
+
+#endif

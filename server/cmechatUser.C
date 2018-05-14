@@ -6,6 +6,7 @@
 #include "cmechatUser.h"
 #include "cmechatInterface.h"
 
+
 cmechatUser::cmechatUser(cmechatServer &myserver) :
     _fd(0),
     _username(""),

@@ -3,6 +3,10 @@
 
 #include <string>
 
+#include "cmechatServer.h"
+
+class cmechatServer;
+
 class cmechatUser
 {
 public:
