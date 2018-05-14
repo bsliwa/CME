@@ -136,6 +136,7 @@ int runUserThread(int myFd)
 	{
 		std::cout << "Maximum number of connections met.  Exiting..." << std::endl;
 	}
+	me->setup(myFd, "username");  //bsliwa need to get hte real username here
 
 	me->runUser();
 
