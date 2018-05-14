@@ -138,7 +138,7 @@ void cmechatServer::listen()
 		int sinSize = sizeof(clientAddr);
 		int clientFd = accept(_listenFd,
 						(struct sockaddr*)&clientAddr,
-						&sinSize);
+						(socklen_t*) &sinSize);
 		if (clientFd < 0)
 		{
 			perror("Error with accept.  Continuing...");
