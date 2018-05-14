@@ -10,11 +10,12 @@ class cmechatUser;
 class cmechatUserManager
 {
     public:
-        cmechatUserManager();
+        cmechatUserManager(cmechatServer &myserver);
         cmechatUser* getNewUser();
 
     private:
         std::vector<cmechatUser *> _userVector;
+        cmechatServer _myServer;
 
 };
 

@@ -30,7 +30,8 @@ void *get_in_addr(struct sockaddr *sa)
 cmechatServer::cmechatServer(const char* logFileName,
 			int argc,
 			char **argv) :
-	_logger(logFileName)
+	_logger(logFileName),
+	_myUserManager(*this)
 {
 	bool debug = cmdOptionExists(argv, argv+argc, "-d");
 	_logger.setDebugMode(debug);
