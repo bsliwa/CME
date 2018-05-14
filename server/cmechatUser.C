@@ -33,7 +33,7 @@ void cmechatUser::runUser()
 			std::cout << "User disconnected " << std::endl;
 			break;
 		}
-		std::cout << "Message received on server (" << numRx << ") " << readArr << std::endl;
+		std::cout <<std::endl <<std::endl<< "Message received on server (" << numRx << ") " << readArr << std::endl;
 		decodeMsg(readArr, numRx);
 	}
 
@@ -42,6 +42,8 @@ void cmechatUser::runUser()
 void cmechatUser::decodeMsg(char *msg, int msgLen)
 {
 	char opcode;
+
+	std::cout << "decodeMsg decoding " << msgLen << " bytes " << std::endl;
 
 	//get the opcode by mapping the first 8 bytes into opcode
 	if (msgLen > sizeof(int))

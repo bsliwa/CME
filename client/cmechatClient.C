@@ -143,7 +143,7 @@ void cmechatClient::getUsername()
     std::string username;
     std::cout << "Welcome to CMEChat.  Please enter a username: ";
     
-    std::cin >> username;
+    getline(std::cin, username);
 
     while (username.length() > MAX_USERNAME_LEN)
     {
