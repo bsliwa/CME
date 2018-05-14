@@ -5,3 +5,5 @@ DEPS = cmechatServer.h cmeChatUserManager.h cmechatUser.h ../common/cmechatLogge
 cmechatServer : main.C cmechatUser.C cmechatServer.C cmechatUserManager.C ../common/cmechatCommandLineParser.C ../common/cmechatLogger.C
 	$(CC) -o cmechatServer -std=c++11 -pthread main.C cmechatServer.C cmechatUser.C cmechatUserManager.C ../common/cmechatCommandLineParser.C ../common/cmechatLogger.C $(CFLAGS)
 
+clean : 
+	rm *.o cmechatServer

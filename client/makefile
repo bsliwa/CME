@@ -8,3 +8,5 @@ DEPS = cmechatClient.h ../common/cmechatLogger.h
 cmechatClient: main.o cmechatClient.o ../common/cmechatLogger.o ../common/cmechatCommandLineParser.C
 	$(CC) -o cmechatClient main.o cmechatClient.o ../common/cmechatLogger.o ../common/cmechatCommandLineParser.C -I. -I../common
 
+clean : 
+	rm *.o cmechatClient
