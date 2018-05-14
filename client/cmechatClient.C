@@ -193,7 +193,7 @@ void cmechatClient::runChat()
         {
             std::cin >> usermsg;
             std::cout << "you entered " << usermsg << std::endl;
-            int sentBytes = send(_myFd, usermsg.c_str(), usermsg.length(), 0);
+            int sentBytes = send(_myFd, usermsg.c_str(), usermsg.length()+1, 0);
             std::cout << "sent " << sentBytes << " bytes" << std::endl;
         }
 
