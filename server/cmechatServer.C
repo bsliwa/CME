@@ -5,6 +5,7 @@
 #include <netdb.h>
 #include <cstring>
 #include <cstdlib>
+#include <thread>
 
 #include "cmechatServer.h"
 #include "../common/cmechatCommandLineParser.h"
@@ -115,6 +116,15 @@ void cmechatServer::openServer()
 	_listenFd = sockfd;
 }
 
+int runUserThread()
+{
+	int myFd=0;
+	std::cout << "in thread" << std::endl;
+	int numSent = send(myFd, "Accepted connection\0", strlen("Accepted connection")+1, 0);
+	std::cout << "sent " << numSent << " bytes" << std::endl;
+
+}
+
 void cmechatServer::listen()
 {
 	int ret;
@@ -146,6 +156,13 @@ void cmechatServer::listen()
 			logme += s;
 			_logger.log(logme.c_str());
 		}
+
+std::cout << "creatign thread" << std::endl;
+		std::thread newThread;
+		newThread = std::thread(runUserThread);
+		newThread.join();
+std::cout << "after thread" << std::endl;
+		
 
 	}
 }

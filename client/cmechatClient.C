@@ -170,7 +170,7 @@ void cmechatClient::runChat()
     std::string userMessage;
     fd_set readSet;
     ssize_t n;
-    char *readArr = new char[MAX_MSG_LEN];
+    char readArr[MAX_MSG_LEN];
     int maxFd;
     std::string usermsg;
 
@@ -180,8 +180,10 @@ void cmechatClient::runChat()
 
     while (true)
     {
-        std::cout << "Enter a message: ";
-        std::flush(std::cout);
+        //std::cout << "Enter a message: " << std::endl;
+        //std::flush(std::cout);
+        
+        FD_ZERO(&readSet);
 
         FD_SET(0, &readSet);
         FD_SET(_myFd, &readSet);
@@ -191,6 +193,13 @@ void cmechatClient::runChat()
         {
             std::cin >> usermsg;
             std::cout << "you entered " << usermsg << std::endl;
+        }
+
+        if (FD_ISSET(_myFd, &readSet))
+        {
+            int numRx = recv(_myFd, readArr, sizeof(readArr), 0);
+            std::cout << "Message received (" << numRx <<") " << readArr << std::endl;
+            std::flush(std::cout);
         }
         
     }
