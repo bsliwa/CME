@@ -7,13 +7,16 @@ cmechatUserManager::cmechatUserManager(cmechatServer &myServer)
 {
     for(int i=0;  i<MAX_CONNECTIONS;  i++)
     {
-        _userVector.push_back(new cmechatUser(*this));
+        _freeUserVector.push_back(new cmechatUser(*this));
     }
 }
 
 cmechatUser* cmechatUserManager::getNewUser()
 {
-    cmechatUser *user = _userVector.back();
-    _userVector.pop_back();
+    cmechatUser *user = _freeUserVector.back();
+    _freeUserVector.pop_back();
+
+    _inUserVector.push_back(user);
+    
     return user;
 }
