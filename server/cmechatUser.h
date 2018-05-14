@@ -10,7 +10,7 @@ class cmechatServer;
 class cmechatUser
 {
 public:
-    cmechatUser(cmechatServer &myServer);
+    cmechatUser();
     void runUser();
     void setup(int fd, std::string username);
     void decodeMsg(char *msg, int msglen);
@@ -18,7 +18,7 @@ public:
 private:
     std::string _username;
     int _fd;
-    cmechatServer &_myServer;
+    cmechatServer *_myServer;
 };
 
 #endif

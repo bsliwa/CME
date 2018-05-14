@@ -5,6 +5,8 @@
 
 #include "cmechatUser.h"
 
+class cmechatUser;
+
 class cmechatUserManager
 {
     public:

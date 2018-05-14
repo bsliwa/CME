@@ -7,10 +7,10 @@
 #include "cmechatInterface.h"
 
 
-cmechatUser::cmechatUser(cmechatServer &myserver) :
+cmechatUser::cmechatUser() :
     _fd(0),
     _username(""),
-	_myServer(myserver)
+    _myServer(0)
 {
 }
 
