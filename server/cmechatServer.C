@@ -128,6 +128,12 @@ int runUserThread(int myFd)
 	int numSent = send(myFd, "Accepted connection\0", strlen("Accepted connection")+1, 0);
 	std::cout << "sent " << numSent << " bytes" << std::endl;
 
+	cmechatUser *me = cmechatServer.userManager.getNewUser();
+	if (me == 0)
+	{
+		std::cout << "Maximum number of connections met.  Exiting..." << std::endl;
+	}
+
 	while(true)
 	{
 		int numRx = recv(myFd, readArr, sizeof(readArr), 0);
