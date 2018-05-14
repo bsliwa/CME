@@ -6,7 +6,7 @@ cmechatUserManager::cmechatUserManager()
 {
     for(int i=0;  i<MAX_CONNECTIONS;  i++)
     {
-        _userVector.push_back(new cmechatUser());
+        _userVector.push_back(new cmechatUser(this));
     }
 }
 
