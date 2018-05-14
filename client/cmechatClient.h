@@ -7,11 +7,12 @@ class cmechatClient
                 int argc,
                 char** argv);
         void startClient();
+        void connectToServer();
+        void runChat();
 
     private:
         cmechatLogger _logger;  //file logger object
-        char* _port;              //port to connect to
+        char* _port;            //port to connect to
         char* _host;            //host to connect to
-        
-
+        int _myFd;
 };
