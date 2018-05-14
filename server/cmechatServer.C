@@ -182,3 +182,8 @@ std::cout << "after thread" << std::endl;
 
 	}
 }
+
+void cmechatServer::fanOutBroadcast(char *msg)
+{
+	std::vector<cmechatUser *> &inuseVector = this->_myUserManager.getInUseVector();
+}
