@@ -236,6 +236,7 @@ void cmechatClient::runChat()
         {
             int msglen=0;
             getline(std::cin, usermsg);
+            parseUserInput(usermsg);
         }
 
         if (FD_ISSET(_myFd, &readSet))
