@@ -214,7 +214,6 @@ void cmechatClient::runChat()
     while (true)
     {
         std::cout << "Enter a message: " << std::endl;
-        std::flush(std::cout);
         
         FD_ZERO(&readSet);
 

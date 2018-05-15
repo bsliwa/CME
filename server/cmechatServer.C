@@ -172,12 +172,10 @@ void cmechatServer::listen()
 		logme += s;
 		_logger.log(logme.c_str());
 
-std::cout << "creatign thread" << std::endl;
 		cmechatUser *me = _myUserManager.getNewUser();
 		std::thread newThread;
 		newThread = std::thread(runUserThread, clientFd, me);
 		newThread.detach();
-std::cout << "after thread" << std::endl;
 	}
 		//newThread.join(); // bsliwa need to join threads at end
 }
