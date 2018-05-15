@@ -182,6 +182,18 @@ void cmechatClient::sendUserName()
     }
 }
 
+bool userIsBlocked(std::vector<string> &userVector, std::string &user)
+{
+    for (std::vecotr<string>::iterator it = userVector.begin();
+           it != userVector.end(); 
+           ++it)
+    {
+        if (*it == user) 
+            return true;
+    }
+    return false;
+}
+
 //return true if message was printed
 bool cmechatClient::decodeMsg(char *msg, int numRx)
 {
@@ -189,8 +201,10 @@ bool cmechatClient::decodeMsg(char *msg, int numRx)
     {
         struct cmechatMessageBroadcastMessage *bcast = (struct cmechatMessageBroadcastMessage*)msg;
         std::string sentFromUser = ((struct cmechatMessageBroadcastMessage*)(msg))->sourceUsername;
-        // origin is another user.  print the message
-        if (sentFromUser != _username)
+        
+        // if origin is from another user, and that user isn't blocked, print the message
+        if (sentFromUser != _username
+                && userIsBlocked(this->_blockedUsers, sentFromUser) == false)
         {
              std::cout << "Received message from: " << sentFromUser << "-->" << bcast->body << std::endl;
         }
@@ -201,8 +215,11 @@ bool cmechatClient::decodeMsg(char *msg, int numRx)
         struct cmechatMessageUnicastMessage *bcast = (struct cmechatMessageUnicastMessage*)msg;
         std::string sentFromUser = ((struct cmechatMessageUnicastMessage*)(msg))->sourceUsername;
         std::string sentToUser = ((struct cmechatMessageUnicastMessage*)(msg))->targetUsername;
-        // origin is another user and destined for me.  print the message
-        if (sentFromUser != _username && this->_username == sentToUser)
+
+        // if origin is another user and destined for me, and I haven't blocked the user, print it
+        if (sentFromUser != _username 
+                && this->_username == sentToUser
+                && userIsBlocked(this->_blockedUsers, sentFromUser) == false)
         {
              std::cout << "Received message from: " << sentFromUser << "-->" << bcast->body << std::endl;
         }
@@ -215,6 +232,9 @@ void cmechatClient::parseUserInput(std::string &usermsg)
 {
     int msglen;
 
+    // 1 - send broadcast msg.  
+    // ask user for the message, put it in a cmechatMessageBroadcastMessage struct, 
+    //  then send it
     if (usermsg == "1")
     {
         struct cmechatMessageBroadcastMessage msg;
@@ -223,6 +243,7 @@ void cmechatClient::parseUserInput(std::string &usermsg)
         std::string bcastmsg;
         getline(std::cin, bcastmsg);
 
+        // create the output msg
         msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
         strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
         strcpy(msg.body, bcastmsg.c_str()); 	       msglen += bcastmsg.length()+1;
@@ -230,6 +251,9 @@ void cmechatClient::parseUserInput(std::string &usermsg)
         int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
     }
 
+    // 2 - send unicast message
+    // ask user for the target user.  then ask for the actual message.  then put it in 
+    //  a cmechatMessageUnicastMessage, and send it out
     if (usermsg == "2")
     {
         struct cmechatMessageUnicastMessage msg;
@@ -242,12 +266,25 @@ void cmechatClient::parseUserInput(std::string &usermsg)
         std::string ucastmsg;
         getline(std::cin, ucastmsg);
 
+        // create the output msg
         msg.opcode = CMECHAT_OPCODE_UNICAST_MESSAGE;   msglen += sizeof(msg.opcode);
         strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
         strcpy(msg.targetUsername, who.c_str());       msglen += sizeof(msg.targetUsername);
         strcpy(msg.body, ucastmsg.c_str()); 	       msglen += ucastmsg.length()+1;
         msg.body[ucastmsg.length()] = '\0';
         int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
+    }
+
+    // 3 - block a user.  ask for the username to block. store the username.
+    if (usermsg == "3")
+    {
+        struct cmechatMessageUnicastMessage msg;
+
+        std::cout << "Who do you want to block? " ;
+        std::string who;
+        getline(std::cin, who);
+
+        _blockedUsers.pushBack(who);
     }
 }
 

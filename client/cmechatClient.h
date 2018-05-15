@@ -24,6 +24,9 @@ class cmechatClient
         char* _host;            //host to connect to
         int _myFd;
         std::string _username;
+        // blockedUsers could be optimized for performance with a map, 
+        //  or other data structure.
+        std::vector<std::string> _blockedUsers;
 
         bool decodeMsg(char *msg, int numRx);
         void parseUserInput(std::string &s);
