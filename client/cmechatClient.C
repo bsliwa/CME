@@ -202,11 +202,18 @@ void cmechatClient::parseUserInput(std::string &usermsg)
     struct cmechatMessageBroadcastMessage msg;
     int msglen;
 
-    msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
-    strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
-    strcpy(msg.body, usermsg.c_str()); 	           msglen += usermsg.length()+1;
-    msg.body[usermsg.length()] = '\0';
-    int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
+    if (usermsg == "1")
+    {
+        std::cout << "Enter message: " ;
+        std::string bcastmsg;
+        getline(std::cin, bcastmsg);
+
+        msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
+        strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
+        strcpy(msg.body, bcastmsg.c_str()); 	       msglen += bcastmsg.length()+1;
+        msg.body[bcastmsg.length()] = '\0';
+        int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
+    }
 }
 
 void cmechatClient::runChat()
@@ -248,7 +255,10 @@ void cmechatClient::runChat()
                  exit(0);
             }
             decodeMsg(readArr, numRx);
-            std::cout << "Enter a message: " << std::endl;
+            std::cout << "Menu" << std::endl
+                      << "1) Send broadcast message" << std::endl
+                      << "2) Send unicast message" << std::endl
+                      << "3) Block user" << std::endl;
         }
         
     }
