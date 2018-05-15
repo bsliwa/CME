@@ -162,7 +162,7 @@ void cmechatClient::getUsername()
     _username = username;
 }
 
-
+// Registers user with the server
 void cmechatClient::sendUserName()
 {
     struct cmechatMessageNewuser newUserMsg;
@@ -179,6 +179,9 @@ void cmechatClient::sendUserName()
     }
 }
 
+// Upon receipt of incoming message from server, this routine is called
+// to see if the sender of the message is on my blocked list.  If so
+// return true
 bool userIsBlocked(std::vector<std::string> &userVector, std::string &user)
 {
     for (std::vector<std::string>::iterator it = userVector.begin();
@@ -191,7 +194,10 @@ bool userIsBlocked(std::vector<std::string> &userVector, std::string &user)
     return false;
 }
 
-//return true if message was printed
+// Takes the message recived via tcp from server, and decodes it.  First byte is opcode; based off of that
+// we know if it is a broadcast message or unicast.  
+// This routine also determine if the message is intended to be printed, and will do so.
+// return true if message was printed - this will indicate to the caller that it should re-print the menu
 bool cmechatClient::decodeMsg(char *msg, int numRx)
 {
     if (msg[0] == CMECHAT_OPCODE_BROADCAST_MESSAGE)
@@ -225,6 +231,7 @@ bool cmechatClient::decodeMsg(char *msg, int numRx)
 
 }
 
+// looks at the stdin and determines if user wants to send broadcast, unicast, or block a user
 void cmechatClient::parseUserInput(std::string &usermsg)
 {
     int msglen;
@@ -297,6 +304,8 @@ void cmechatClient::parseUserInput(std::string &usermsg)
     }
 }
 
+// main routine for a user.  It monitors stdin and the tcp socket for 
+// user input and incoming messages 
 void cmechatClient::runChat()
 {
     std::string userMessage;
