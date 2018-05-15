@@ -32,6 +32,7 @@ void cmechatUserManager::freeUser(cmechatUser *user)
               {
 		std::cout << "freeUser, looping and found it" << std::endl;
                   _inUseVector.erase(it);
+                  break;
               }
           }
 }

@@ -43,6 +43,7 @@ void cmechatUser::runUser()
 	logme += this->_username;
 	logme += " disconnected";
 	this->_myUserManager.myServer.log()
+   	this->_myUserManager.freeUser(this);
 
 }
 
