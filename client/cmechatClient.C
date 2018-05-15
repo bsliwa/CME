@@ -195,6 +195,19 @@ void cmechatClient::decodeMsg(char *msg, int numRx)
         }
     }
 
+    if (msg[0] == CMECHAT_OPCODE_UNICAST_MESSAGE)
+    {
+        struct cmechatMessageUnicastMessage *bcast = (struct cmechatMessageUnicastMessage*)msg;
+        std::string sentFromUser = ((struct cmechatMessageUnicastMessage*)(msg))->sourceUsername;
+        std::string sentToUser = ((struct cmechatMessageUnicastMessage*)(msg))->targetUsername;
+        // origin is another user and destined for me.  print the message
+        if (sentFromUser != _username && this->_username == sentToUser)
+        {
+             std::cout << "Received message from: " << sentFromUser << "-->" << bcast->body << std::endl;
+        }
+    }
+
+
 }
 
 void cmechatClient::parseUserInput(std::string &usermsg)
