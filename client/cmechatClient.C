@@ -24,6 +24,7 @@ void *get_in_addr(struct sockaddr *sa)
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
+// Constructor.  It reads the command line arguments and stores them.
 cmechatClient::cmechatClient(const char* logFileName,
                                 int argc,
                                 char **argv) :
@@ -67,7 +68,9 @@ cmechatClient::cmechatClient(const char* logFileName,
         exit(1);
     }
 }
-    
+
+// Attempts to connect to server via tcp port and ip provided on command
+// line by user
 void cmechatClient::connectToServer()
 {
     int ret;
@@ -122,26 +125,15 @@ void cmechatClient::connectToServer()
 
     freeaddrinfo(serverinfo);
     
-    {
-        std::string logme;
-        logme = "Connected to ";
-        logme += s;
-        _logger.log(logme.c_str());
-    }
+    std::string logme;
+    logme = "Connected to ";
+    logme += s;
+    _logger.log(logme.c_str());
 
     _myFd = mysock;
 }
 
-void cmechatClient::registerUsername()
-{
-    struct cmechatMessageNewuser msg;
-    
-    memset(&msg, 0, sizeof(msg));
-    msg.opcode = CMECHAT_OPCODE_NEWUSER;
-    strcpy(&msg.username[0], _username.c_str());
-    send(_myFd, &msg, sizeof(msg), 0); 
-}
-
+// Gets user name from stdin
 void cmechatClient::getUsername()
 {
     std::string username;
@@ -169,6 +161,7 @@ void cmechatClient::getUsername()
 
     _username = username;
 }
+
 
 void cmechatClient::sendUserName()
 {

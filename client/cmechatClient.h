@@ -17,7 +17,6 @@ class cmechatClient
         void connectToServer();
         void runChat();
         void getUsername();
-        void registerUsername();
         void sendUserName();
 
     private:
