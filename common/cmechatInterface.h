@@ -21,6 +21,7 @@ struct cmechatMessageNewuser
 struct cmechatMessageBroadcastMessage
 {
     unsigned char opcode;
+    char sourceUsername[MAX_USERNAME_LEN];
     char body[MAX_MSG_LEN];
 };
 

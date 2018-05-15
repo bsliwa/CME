@@ -172,16 +172,29 @@ void cmechatClient::sendUserName()
     unsigned int msgLen=0;
 
     newUserMsg.opcode = CMECHAT_OPCODE_NEWUSER;           msgLen+= sizeof(newUserMsg.opcode);
-    std::cout << "copying " << this->_username << " into the msg" << std::endl;
     strcpy(newUserMsg.username, this->_username.c_str()); msgLen += strlen(newUserMsg.username)+1;
 
     int sentBytes = send(_myFd, (void *)&newUserMsg, msgLen, 0);
-    std::cout << "sending " << sentBytes << " bytes " << " out of " << msgLen << std::endl;
     if (sentBytes < 0)
     {
         std::cout << "Could not send username to server.  Exiting..." << std::endl;
         exit(1);
     }
+}
+
+void cmechatClient::decodeMsg(char *msg, int numRx)
+{
+    if (msg[0] == CMECHAT_OPCODE_BROADCAST_MESSAGE)
+    {
+        struct cmechatMessageBroadcastMessage *bcast = (struct cmechatMessageBroadcastMessage*)msg;
+        std::string sentFromUser = ((struct cmechatMessageBroadcastMessage*)(msg))->sourceUsername;
+        // origin is another user.  print the message
+        if (sentFromUser != _username)
+        {
+             std::cout << "Received message from: " << sentFromUser << "-->" << bcast->body << std::endl;
+        }
+    }
+
 }
 
 void cmechatClient::runChat()
@@ -213,20 +226,23 @@ void cmechatClient::runChat()
         {
             int msglen=0;
             getline(std::cin, usermsg);
-            std::cout << "you entered " << usermsg << std::endl;
             struct cmechatMessageBroadcastMessage msg;
             msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
+            strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
             strcpy(msg.body, usermsg.c_str()); 	           msglen += usermsg.length()+1;
             msg.body[usermsg.length()] = '\0';
             int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
-            std::cout << "sent " << sentBytes << " bytes" << std::endl;
         }
 
         if (FD_ISSET(_myFd, &readSet))
         {
             int numRx = recv(_myFd, readArr, sizeof(readArr), 0);
-            std::cout << "Message received (" << numRx <<") " << readArr << std::endl;
-            std::flush(std::cout);
+            if (numRx == 0) 
+            {
+                 std::cout << "Server disconnted. Exiting..." << std::endl;
+                 exit(0);
+            }
+            decodeMsg(readArr, numRx);
         }
         
     }

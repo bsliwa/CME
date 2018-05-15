@@ -176,11 +176,10 @@ std::cout << "creatign thread" << std::endl;
 		cmechatUser *me = _myUserManager.getNewUser();
 		std::thread newThread;
 		newThread = std::thread(runUserThread, clientFd, me);
-		newThread.join();
+		newThread.detach();
 std::cout << "after thread" << std::endl;
-		
-
 	}
+		//newThread.join(); // bsliwa need to join threads at end
 }
 
 void cmechatServer::fanOutBroadcast(struct cmechatMessageBroadcastMessage *msg, int msgLen)

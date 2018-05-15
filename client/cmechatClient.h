@@ -24,6 +24,9 @@ class cmechatClient
         char* _host;            //host to connect to
         int _myFd;
         std::string _username;
+
+        void decodeMsg(char *msg, int numRx);
+
 };
 
 #endif
