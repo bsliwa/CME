@@ -23,7 +23,6 @@ void cmechatUser::setup(int fd, std::string username)
 
 void cmechatUser::runUser()
 {
-
     char readArr[MAX_MSG_LEN];
 
     while(true)
@@ -37,7 +36,7 @@ void cmechatUser::runUser()
 		std::cout <<std::endl <<std::endl<< "Message received on server (" << numRx << ") " << readArr << std::endl;
 		decodeMsg(readArr, numRx);
 	}
-    
+   	this->_myUserManager.freeUser(this);
 
 }
 

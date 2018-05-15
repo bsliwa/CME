@@ -213,8 +213,6 @@ void cmechatClient::runChat()
 
     while (true)
     {
-        std::cout << "Enter a message: " << std::endl;
-        std::flush(std::cout);
         
         FD_ZERO(&readSet);
 
@@ -243,6 +241,7 @@ void cmechatClient::runChat()
                  exit(0);
             }
             decodeMsg(readArr, numRx);
+            std::cout << "Enter a message: " << std::endl;
         }
         
     }
