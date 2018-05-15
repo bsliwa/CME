@@ -20,17 +20,17 @@ cmechatUser* cmechatUserManager::getNewUser()
 
     return user;
 }
-/*
+
 void cmechatUserManager::freeUser(cmechatUser *user)
 {
     for (std::vector<cmechatUser*>::iterator it = _inUseVector.begin();
           it != _inUseVector.end();
           ++it)
           {
-              if (*it == user)
+              if (it == user)
               {
-                  _inUseVector.erase()
+                  _inUseVector.erase(it);
               }
           }
 }
-*/
+
