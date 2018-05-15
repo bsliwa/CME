@@ -31,10 +31,14 @@ void cmechatUser::runUser()
 		int numRx = recv(_fd, readArr, sizeof(readArr), 0);
 		if (numRx == 0)
 		{
-			std::cout << "User disconnected " << std::endl;
 			break;
 		}
-		std::cout <<std::endl <<std::endl<< "Message received on server (" << numRx << ") " << readArr << std::endl;
+		string logme;
+		logme = "Message received on server (";
+		logme += numRx;
+		logme += ")";
+		logme += readArr;
+		_logger.log(logme);
 		decodeMsg(readArr, numRx);
 	}
     
