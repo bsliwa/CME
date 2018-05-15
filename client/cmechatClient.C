@@ -182,7 +182,8 @@ void cmechatClient::sendUserName()
     }
 }
 
-void cmechatClient::decodeMsg(char *msg, int numRx)
+//return true if message was printed
+bool cmechatClient::decodeMsg(char *msg, int numRx)
 {
     if (msg[0] == CMECHAT_OPCODE_BROADCAST_MESSAGE)
     {
@@ -288,8 +289,9 @@ void cmechatClient::runChat()
                  std::cout << "Server disconnted. Exiting..." << std::endl;
                  exit(0);
             }
-            decodeMsg(readArr, numRx);
-            std::cout << "Menu" << std::endl
+            bool printed = decodeMsg(readArr, numRx);
+            if (printed)
+                std::cout << "Menu" << std::endl
                       << "1) Send broadcast message" << std::endl
                       << "2) Send unicast message" << std::endl
                       << "3) Block user" << std::endl;

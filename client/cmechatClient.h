@@ -25,7 +25,7 @@ class cmechatClient
         int _myFd;
         std::string _username;
 
-        void decodeMsg(char *msg, int numRx);
+        bool decodeMsg(char *msg, int numRx);
         void parseUserInput(std::string &s);
 
 };
