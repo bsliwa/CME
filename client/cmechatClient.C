@@ -200,6 +200,8 @@ void cmechatClient::decodeMsg(char *msg, int numRx)
 void cmechatClient::parseUserInput(std::string &userMessage)
 {
     struct cmechatMessageBroadcastMessage msg;
+    int msglen;
+    
     msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
     strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
     strcpy(msg.body, usermsg.c_str()); 	           msglen += usermsg.length()+1;
