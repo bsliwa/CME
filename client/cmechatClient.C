@@ -27,54 +27,54 @@ void *get_in_addr(struct sockaddr *sa)
 cmechatClient::cmechatClient(const char* logFileName,
                                 int argc,
                                 char **argv) :
-                            _logger(logFileName),
-                            _myFd(0)
+                                _logger(logFileName),
+                                _myFd(0)
 {
     bool debug = cmdOptionExists(argv, argv+argc, "-d");
-	_logger.setDebugMode(debug);
+    _logger.setDebugMode(debug);
 
-	// read the port from command line
-	_port = getCmdOption(argv, argv+argc, "-p");
-	if (_port)
-	{
-		std::string s;
-		s += "User specified port ";
-		s += _port;
-		_logger.log(s.c_str());
-	}
-	else
-	{
-                std::string logme("-p <port> option is required. Exiting.");
-                std::cout << logme << std::endl;
-		_logger.log(logme);
-		exit(1);
-	}
+    // read the port from command line
+    _port = getCmdOption(argv, argv+argc, "-p");
+    if (_port)
+    {
+        std::string s;
+        s += "User specified port ";
+        s += _port;
+        _logger.log(s.c_str());
+    }
+    else
+    {
+        std::string logme("-p <port> option is required. Exiting.");
+        std::cout << logme << std::endl;
+        _logger.log(logme);
+        exit(1);
+    }
 
-	// read the ip from command line
-	_host = getCmdOption(argv, argv+argc, "-h");
-	if (_host)
-	{
-		std::string s;
-		s += "User specified host ";
-		s += _host;
-		_logger.log(s.c_str());
-	}
-	else
-	{
-                std::string logme("-h <host> option is required. Exiting.");
-                std::cout << logme << std::endl;
-		_logger.log(logme);
-		exit(1);
-	}
+    // read the ip from command line
+    _host = getCmdOption(argv, argv+argc, "-h");
+    if (_host)
+    {
+        std::string s;
+        s += "User specified host ";
+        s += _host;
+        _logger.log(s.c_str());
+    }
+    else
+    {
+        std::string logme("-h <host> option is required. Exiting.");
+        std::cout << logme << std::endl;
+        _logger.log(logme);
+        exit(1);
+    }
 }
-
+    
 void cmechatClient::connectToServer()
 {
     int ret;
     struct addrinfo hints;
     struct addrinfo *serverinfo;
     struct addrinfo *p;
-   	char s[INET_ADDRSTRLEN];
+    char s[INET_ADDRSTRLEN];
     int mysock;
 
     memset(&hints, 0, sizeof(hints));
@@ -250,7 +250,7 @@ void cmechatClient::parseUserInput(std::string &usermsg)
         // create the output msg
         msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
         strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
-        strcpy(msg.body, bcastmsg.c_str()); 	       msglen += bcastmsg.length()+1;
+        strcpy(msg.body, bcastmsg.c_str());            msglen += bcastmsg.length()+1;
         msg.body[bcastmsg.length()] = '\0';
         int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
     }
@@ -274,7 +274,7 @@ void cmechatClient::parseUserInput(std::string &usermsg)
         msg.opcode = CMECHAT_OPCODE_UNICAST_MESSAGE;   msglen += sizeof(msg.opcode);
         strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
         strcpy(msg.targetUsername, who.c_str());       msglen += sizeof(msg.targetUsername);
-        strcpy(msg.body, ucastmsg.c_str()); 	       msglen += ucastmsg.length()+1;
+        strcpy(msg.body, ucastmsg.c_str());            msglen += ucastmsg.length()+1;
         msg.body[ucastmsg.length()] = '\0';
         int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
     }
