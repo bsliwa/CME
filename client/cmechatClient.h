@@ -1,6 +1,8 @@
 #ifndef _CMECHAT_CLIENT__
 #define _CMECHAT_CLIENT__
 
+#include <vector>
+
 #include "../common/cmechatLogger.h"
 #include "../common/cmechatInterface.h"
 

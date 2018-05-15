@@ -182,9 +182,9 @@ void cmechatClient::sendUserName()
     }
 }
 
-bool userIsBlocked(std::vector<string> &userVector, std::string &user)
+bool userIsBlocked(std::vector<std::string> &userVector, std::string &user)
 {
-    for (std::vecotr<string>::iterator it = userVector.begin();
+    for (std::vector<std::string>::iterator it = userVector.begin();
            it != userVector.end(); 
            ++it)
     {
@@ -284,7 +284,7 @@ void cmechatClient::parseUserInput(std::string &usermsg)
         std::string who;
         getline(std::cin, who);
 
-        _blockedUsers.pushBack(who);
+        _blockedUsers.push_back(who);
     }
 }
 
