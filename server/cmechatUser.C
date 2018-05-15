@@ -37,6 +37,7 @@ void cmechatUser::runUser()
 		std::cout <<std::endl <<std::endl<< "Message received on server (" << numRx << ") " << readArr << std::endl;
 		decodeMsg(readArr, numRx);
 	}
+    
 
 }
 

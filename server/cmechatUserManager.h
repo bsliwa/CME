@@ -16,7 +16,8 @@ class cmechatUserManager
         cmechatUser* getNewUser();
         cmechatServer& myServer() {return _myServer;}
         std::vector<cmechatUser *> &getInUseVector() { return _inUseVector; }
-        freeUser(cmechatUser *user);
+
+        void freeUser(cmechatUser *user);
 
     private:
         std::vector<cmechatUser *> _freeUserVector; //has a vector of available users
