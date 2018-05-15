@@ -27,10 +27,8 @@ void cmechatUserManager::freeUser(cmechatUser *user)
           it != _inUseVector.end();
           ++it)
           {
-		std::cout << "freeUser, looping " << std::endl;
               if (*it == user)
               {
-		std::cout << "freeUser, looping and found it" << std::endl;
                   _inUseVector.erase(it);
                   break;
               }

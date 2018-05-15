@@ -127,9 +127,7 @@ void cmechatServer::openServer()
 int runUserThread(int myFd, cmechatUser *me)
 {
 	char readArr[MAX_MSG_LEN];
-	std::cout << "in thread" << std::endl;
 	int numSent = send(myFd, "Accepted connection\0", strlen("Accepted connection")+1, 0);
-	std::cout << "sent " << numSent << " bytes" << std::endl;
 
 	if (me == 0)
 	{
@@ -189,7 +187,6 @@ void cmechatServer::fanOutBroadcast(struct cmechatMessageBroadcastMessage *msg, 
 			   it++)
 	{
 		cmechatUser *me = *it;
-		std::cout << "iterating! " << me->username() << std::endl;
 		send(me->fd(), msg, msgLen, 0);
 
 		//here we should send the msg

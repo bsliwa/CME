@@ -15,6 +15,8 @@ public:
 	void openServer();
 	void listen();
 	void fanOutBroadcast(struct cmechatMessageBroadcastMessage *msg, int msgLen);
+	void log(char *s) { _logger.log(s); }
+	void log(std::string &s) { _logger.log(s); }
 
 private:
 	cmechatLogger _logger;	//file logger object
