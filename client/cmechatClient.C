@@ -199,11 +199,12 @@ void cmechatClient::decodeMsg(char *msg, int numRx)
 
 void cmechatClient::parseUserInput(std::string &usermsg)
 {
-    struct cmechatMessageBroadcastMessage msg;
     int msglen;
 
     if (usermsg == "1")
     {
+        struct cmechatMessageBroadcastMessage msg;
+
         std::cout << "Enter message: " ;
         std::string bcastmsg;
         getline(std::cin, bcastmsg);
@@ -217,6 +218,8 @@ void cmechatClient::parseUserInput(std::string &usermsg)
 
     if (usermsg == "2")
     {
+        struct cmechatMessageUnicastMessage msg;
+
         std::cout << "Who do you want to send to? " ;
         std::string who;
         getline(std::cin, who);
