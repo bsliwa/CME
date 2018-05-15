@@ -56,7 +56,6 @@ void cmechatUser::decodeMsg(char *msg, int msgLen)
 {
 	char opcode;
 
-
 	//get the opcode by mapping the first 8 bytes into opcode
 	if (msgLen > sizeof(int))
 	{

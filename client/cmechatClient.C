@@ -44,7 +44,9 @@ cmechatClient::cmechatClient(const char* logFileName,
 	}
 	else
 	{
-		_logger.log("-p <port> option is required. Exiting.");
+                std::string logme("-p <port> option is required. Exiting.");
+                std::cout << logme << std::endl;
+		_logger.log(logme);
 		exit(1);
 	}
 
@@ -59,7 +61,9 @@ cmechatClient::cmechatClient(const char* logFileName,
 	}
 	else
 	{
-		_logger.log("-h <host> option is required. Exiting.");
+                std::string logme("-h <host> option is required. Exiting.");
+                std::cout << logme << std::endl;
+		_logger.log(logme);
 		exit(1);
 	}
 }
