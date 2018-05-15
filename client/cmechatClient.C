@@ -197,6 +197,16 @@ void cmechatClient::decodeMsg(char *msg, int numRx)
 
 }
 
+void cmechatClient::parseUserInput(std::string &userMessage)
+{
+    struct cmechatMessageBroadcastMessage msg;
+    msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
+    strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
+    strcpy(msg.body, usermsg.c_str()); 	           msglen += usermsg.length()+1;
+    msg.body[usermsg.length()] = '\0';
+    int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
+}
+
 void cmechatClient::runChat()
 {
     std::string userMessage;
@@ -224,12 +234,6 @@ void cmechatClient::runChat()
         {
             int msglen=0;
             getline(std::cin, usermsg);
-            struct cmechatMessageBroadcastMessage msg;
-            msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
-            strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
-            strcpy(msg.body, usermsg.c_str()); 	           msglen += usermsg.length()+1;
-            msg.body[usermsg.length()] = '\0';
-            int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
         }
 
         if (FD_ISSET(_myFd, &readSet))
