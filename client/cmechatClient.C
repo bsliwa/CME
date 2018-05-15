@@ -246,6 +246,12 @@ void cmechatClient::parseUserInput(std::string &usermsg)
         std::cout << "Enter message: " ;
         std::string bcastmsg;
         getline(std::cin, bcastmsg);
+        if(bcastmsg.length() > MAX_MSG_LEN)
+        {
+             std::cout << "Max message length is " << MAX_MSG_LEN << "; your message is " << 
+                bcastmsg.length() << ". Try again." << std::endl;
+             return;
+        }
 
         // create the output msg
         msg.opcode = CMECHAT_OPCODE_BROADCAST_MESSAGE; msglen += sizeof(msg.opcode);
@@ -269,6 +275,12 @@ void cmechatClient::parseUserInput(std::string &usermsg)
         std::cout << "Enter message: " ;
         std::string ucastmsg;
         getline(std::cin, ucastmsg);
+        if(ucastmsg.length() > MAX_MSG_LEN)
+        {
+             std::cout << "Max message length is " << MAX_MSG_LEN << "; your message is " << 
+                ucastmsg.length() << ". Try again." << std::endl;
+             return;
+        }
 
         // create the output msg
         msg.opcode = CMECHAT_OPCODE_UNICAST_MESSAGE;   msglen += sizeof(msg.opcode);
@@ -297,7 +309,7 @@ void cmechatClient::runChat()
     std::string userMessage;
     fd_set readSet;
     ssize_t n;
-    char readArr[MAX_MSG_LEN];
+    char readArr[MAX_MSG_LEN+1];
     int maxFd;
     std::string usermsg;
 
@@ -317,8 +329,12 @@ void cmechatClient::runChat()
 
         if (FD_ISSET(0, &readSet))
         {
-            int msglen=0;
             getline(std::cin, usermsg);
+            if(usermsg.length() > MAX_MSG_LEN)
+            {
+                std::cout << "maximum message length exceeded.  skipping this message..." << std::endl;
+                continue;
+            }
             parseUserInput(usermsg);
             printmenu=true;
         }
