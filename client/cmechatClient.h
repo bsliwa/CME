@@ -31,7 +31,7 @@ class cmechatClient
 
         bool decodeMsg(char *msg, int numRx);
         void parseUserInput(std::string &s);
-
+        void registerUsername();
 };
 
 #endif
