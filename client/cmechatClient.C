@@ -214,6 +214,24 @@ void cmechatClient::parseUserInput(std::string &usermsg)
         msg.body[bcastmsg.length()] = '\0';
         int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
     }
+
+    if (usermsg == "2")
+    {
+        std::cout << "Who do you want to send to? " ;
+        std::string who;
+        getline(std::cin, who);
+
+        std::cout << "Enter message: " ;
+        std::string ucastmsg;
+        getline(std::cin, ucastmsg);
+
+        msg.opcode = CMECHAT_OPCODE_UNICAST_MESSAGE;   msglen += sizeof(msg.opcode);
+        strcpy(msg.sourceUsername, _username.c_str()); msglen += sizeof(msg.sourceUsername);
+        strcpy(msg.targetUsername, who.c_str());       msglen += sizeof(msg.targetUsername);
+        strcpy(msg.body, ucastmsg.c_str()); 	       msglen += ucastmsg.length()+1;
+        msg.body[ucastmsg.length()] = '\0';
+        int sentBytes = send(_myFd, (char*)&msg, msglen, 0);
+    }
 }
 
 void cmechatClient::runChat()

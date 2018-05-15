@@ -28,7 +28,8 @@ struct cmechatMessageBroadcastMessage
 struct cmechatMessageUnicastMessage
 {
     unsigned char opcode;
-    char targetUser[MAX_USERNAME_LEN];
+    char sourceUsername[MAX_USERNAME_LEN];
+    char targetUsername[MAX_USERNAME_LEN];
     char body[MAX_MSG_LEN];
 };
 
