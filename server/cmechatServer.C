@@ -183,7 +183,7 @@ std::cout << "after thread" << std::endl;
 	}
 }
 
-void cmechatServer::fanOutBroadcast(char *msg)
+void cmechatServer::fanOutBroadcast(struct cmechatMessageBroadcastMessage *msg, int msgLen)
 {
 	std::vector<cmechatUser *> &inuseVector = this->_myUserManager.getInUseVector();
 
@@ -193,5 +193,8 @@ void cmechatServer::fanOutBroadcast(char *msg)
 	{
 		cmechatUser *me = *it;
 		std::cout << "iterating! " << me->username() << std::endl;
+		send(me->fd(), msg, msgLen, 0);
+
+		//here we should send the msg
 	}
 }

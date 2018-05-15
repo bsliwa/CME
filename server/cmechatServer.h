@@ -14,7 +14,7 @@ public:
 			char** argv);
 	void openServer();
 	void listen();
-	void fanOutBroadcast(char *msg);
+	void fanOutBroadcast(struct cmechatMessageBroadcastMessage *msg, int msgLen);
 
 private:
 	cmechatLogger _logger;	//file logger object
