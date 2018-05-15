@@ -33,12 +33,12 @@ void cmechatUser::runUser()
 		{
 			break;
 		}
-		string logme;
+		std::string logme;
 		logme = "Message received on server (";
-		logme += numRx;
+		logme += std::to_string(numRx);
 		logme += ")";
 		logme += readArr;
-		_logger.log(logme);
+                _myUserManager.myServer().log(logme);
 		decodeMsg(readArr, numRx);
 	}
     
