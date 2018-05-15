@@ -267,7 +267,7 @@ void cmechatClient::runChat()
 
     while (true)
     {
-        
+        bool printmenu;
         FD_ZERO(&readSet);
 
         FD_SET(0, &readSet);
@@ -279,6 +279,7 @@ void cmechatClient::runChat()
             int msglen=0;
             getline(std::cin, usermsg);
             parseUserInput(usermsg);
+            printmenu=true;
         }
 
         if (FD_ISSET(_myFd, &readSet))
@@ -289,13 +290,14 @@ void cmechatClient::runChat()
                  std::cout << "Server disconnted. Exiting..." << std::endl;
                  exit(0);
             }
-            bool printed = decodeMsg(readArr, numRx);
-            if (printed)
+            printmenu = decodeMsg(readArr, numRx);
+
+        }
+        if (printmenu)
                 std::cout << "Menu" << std::endl
                       << "1) Send broadcast message" << std::endl
                       << "2) Send unicast message" << std::endl
                       << "3) Block user" << std::endl;
-        }
         
     }
 }
