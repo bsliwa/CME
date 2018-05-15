@@ -66,7 +66,7 @@ void cmechatUser::decodeMsg(char *msg, int msgLen)
 		this->_username = newUserMsg->username;
 	}
 
-	if (opcode == CMECHAT_OPCODE_BROADCAST_MESSAGE)
+	if (opcode == CMECHAT_OPCODE_BROADCAST_MESSAGE || opcode == CMECHAT_OPCODE_UNICAST_MESSAGE) 
 	{
 		struct cmechatMessageBroadcastMessage *broadcastMsg;
 		broadcastMsg = (struct cmechatMessageBroadcastMessage *) msg;
